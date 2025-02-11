@@ -1,6 +1,6 @@
 # Railway-Management-System
 
-This project is a backend API for a railway management system. This users to search for trains, check seat availability, book tickets, and view booking details. Admins can manage train data such as Adding trains, updating seats etc.
+This project is a backend API for a railway management system. In this, the users can search for trains, check seat availability, book tickets, and view booking details. Admins can manage train data such as Adding trains, updating seats etc.
 ---
 
 ## **Features**
