@@ -58,7 +58,7 @@ export const updateTrain = async(req,res) => {
       return res.status(404).json({ message: 'Train not found' });
     }
 
-    res.status(200).json({ message: "Train updated successfully", train: trainResult.rows[0] })
+    res.status(200).json({ message: "Train updated successfully", train: trainExists.rows[0] })
   } 
   catch(error){
     console.error(error.message);
@@ -98,7 +98,7 @@ export const getSeatAvailability = async(req,res) => {
       return res.status(404).json({ message: "Seats Full" })
     }
 
-    res.status(200).json({ availableSeats: seatResult.rows[0].availableseats })
+    res.status(200).json({ availableSeats: seats.rows[0].availableseats })
   } 
   catch(error){
     console.error(error.message);

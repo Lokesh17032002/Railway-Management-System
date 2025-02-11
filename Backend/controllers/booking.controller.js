@@ -21,7 +21,7 @@ export const bookSeat = async(req,res) => {
       return res.status(404).json({ message: "Train not found" })
     }
 
-    const availableSeats= trainResult.rows[0].availableseats;
+    const availableSeats= train.rows[0].availableseats;
 
     if(seatsBooked > availableSeats){
       return res.status(400).json({ message: "Not enough seats available" })
@@ -59,7 +59,7 @@ export const getBookingDetails = async(req,res) => {
       return res.status(404).json({ message: "No Booking Found" })
     }
 
-    res.status(200).json({ booking: bookingResult.rows[0] })
+    res.status(200).json({ booking: booking.rows[0] })
   } 
   catch(error){
     console.error(error.message);
