@@ -10,6 +10,7 @@ const createAdminTable = async() => {
     password TEXT NOT NULL,
     phoneNumber VARCHAR(255) NOT NULL,
     address TEXT,
+    apiKey VARCHAR(255),
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
   )`
 

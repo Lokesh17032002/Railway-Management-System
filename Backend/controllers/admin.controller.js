@@ -60,7 +60,7 @@ export const loginAdmin = async (req, res) => {
       return res.status(401).json({ message: "Invalid email, password, or API key" });
     }
 
-    const admin = adminResult.rows[0];
+    const admin = adminExists.rows[0];
 
     const isMatch = await bcrypt.compare(password, admin.password);
     if(!isMatch){
