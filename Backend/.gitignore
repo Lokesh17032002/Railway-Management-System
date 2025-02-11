@@ -1,12 +1,7 @@
-# Ignore node_modules folder
 node_modules/
-
-# Ignore environment files (optional)
 .env
 
-# Ignore log files (optional)
 *.log
 
-# Ignore build files (if using a build tool)
 dist/
 build/

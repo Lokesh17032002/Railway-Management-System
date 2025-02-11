@@ -11,6 +11,8 @@ export const bookSeat = async(req,res) => {
   const userId = req.user.userId
 
   try {
+    await createBookingTable();
+
     const getTrain = "SELECT availableSeats FROM trains WHERE trainId = $1";
     const train = await pool.query(getTrain, [trainId]);
 
@@ -44,6 +46,8 @@ export const getBookingDetails = async(req,res) => {
   const { bookingId } = req.params;
 
   try{
+    await createBookingTable();
+    
     const findBooking = `SELECT b.*, t.trainName, t.sourceStation, t.destinationStation
       FROM bookings b
       JOIN trains t ON b.trainId = t.trainId

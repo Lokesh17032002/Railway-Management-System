@@ -16,6 +16,5 @@ const createAdminTable = async() => {
   await pool.query(query);
 }
 
-createAdminTable()
 export default createAdminTable;
 

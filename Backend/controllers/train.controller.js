@@ -10,6 +10,8 @@ export const addTrain = async(req,res) => {
   const {trainNumber, trainName, sourceStation, destinationStation, totalSeats} = req.body;
 
   try{
+    await createTrainTable()
+
     const getTrain = 'SELECT * FROM trains WHERE trainNumber = $1';
     const trainExists = await pool.query(getTrain, [trainNumber])
 
@@ -42,6 +44,8 @@ export const updateTrain = async(req,res) => {
   const {trainName, totalSeats, availableSeats} = req.body;
 
   try{
+    await createTrainTable()
+
     const updateTrain = `UPDATE trains
       SET trainName = COALESCE($1, trainName), totalSeats = COALESCE($2, totalSeats), availableSeats = COALESCE($3, availableSeats)
       WHERE trainId = $4
@@ -65,6 +69,8 @@ export const getTrainsByRoute = async(req,res) => {
   const {sourceStation, destinationStation } = req.body
 
   try{
+    await createTrainTable()
+
     const fetchTrainsQuery = `SELECT * FROM trains
       WHERE sourceStation = $1 AND destinationStation = $2;`;
     
@@ -82,6 +88,8 @@ export const getSeatAvailability = async(req,res) => {
   const {trainId } = req.params
 
   try {
+    await createTrainTable()
+    
     const getSeats = 'SELECT availableSeats FROM trains WHERE trainId = $1';
     const seats = await pool.query(getSeats, [trainId])
 

@@ -12,6 +12,8 @@ export const registerAdmin = async(req,res) => {
   const {email, password, phoneNumber, address, apiKey} = req.body;
 
   try{
+    await createAdminTable();
+
     const getAdmin = 'SELECT * FROM admins WHERE email = $1';
     const adminExists = await pool.query(getAdmin, [email]);
 
@@ -46,6 +48,8 @@ export const loginAdmin = async (req, res) => {
   const { email, password, apiKey } = req.body;
 
   try{
+    await createAdminTable();
+
     const getAdmin = 'SELECT * FROM admins WHERE email = $1';
     const adminExists = await pool.query(getAdmin, [email]);
 
@@ -71,6 +75,8 @@ export const loginAdmin = async (req, res) => {
 
 export const logoutAdmin = async(req, res) => {
   try{
+    await createAdminTable();
+      
     res.clearCookie('token');
     res.status(200).json({ message: "Logged out successfully" });
   } 

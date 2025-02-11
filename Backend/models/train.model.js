@@ -18,6 +18,5 @@ const createTrainTable = async() => {
   await pool.query(query);
 }
 
-createTrainTable()
 export default createTrainTable;
 

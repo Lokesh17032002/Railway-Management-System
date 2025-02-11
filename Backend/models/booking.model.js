@@ -16,6 +16,5 @@ const createBookingTable = async() => {
   await pool.query(query);
 }
 
-createBookingTable()
 export default createBookingTable;
 

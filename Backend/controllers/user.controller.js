@@ -2,6 +2,7 @@ import pool from '../config/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
+import createUserTable from '../models/user.model.js';
 
 export const registerUser = async(req,res) => {
   const errors = validationResult(req);
@@ -12,6 +13,8 @@ export const registerUser = async(req,res) => {
   const {email, password, phoneNumber, address} = req.body;
 
   try{
+    await createUserTable();
+
     const getUser = 'SELECT * FROM users WHERE email = $1';
     const userExists = await pool.query(getUser, [email]);
 
@@ -47,6 +50,8 @@ export const loginUser = async(req,res) => {
   const { email, password } = req.body;
 
   try{
+    await createUserTable();
+
     const getUser = 'SELECT * FROM users WHERE email = $1';
     const userExists = await pool.query(getUser, [email]);
 
@@ -66,6 +71,8 @@ export const loginUser = async(req,res) => {
     res.status(200).json({ token, user });
   } 
   catch(error){
+    await createUserTable();
+    
     console.error(error.message);
     res.status(500).json({ message: "Internal server error" });
   }
