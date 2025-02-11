@@ -1,34 +1,23 @@
-const { DataTypes } = require('sequelize');
-const db = require('../config/database');
+import pkg from 'pg'
+import pool from "../config/db.js"
 
-const Train = db.define('Train', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  source: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  destination: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  totalSeats: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-  availableSeats: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-}, {
-  timestamps: true,
-});
+const {Pool} = pkg
 
-module.exports = Train;
+const createTrainTable = async() => {
+  const query = `CREATE TABLE IF NOT EXISTS trains(
+    trainId SERIAL PRIMARY KEY,
+    trainNuber VARCHAR(255) UNIQUE NOT NULL,
+    trainName VARCHAR(255) NOT NULL,
+    sourceStation VARCHAR(255) NOT NULL,
+    destinationStation VARCHAR(255) NOT NULL,
+    totalSeats INTEGER NOT NULL,
+    availableSeats INTEGER NOT NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  )`
+
+  await pool.query(query);
+}
+
+createTrainTable()
+export default createTrainTable;
+
