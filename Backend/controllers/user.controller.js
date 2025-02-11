@@ -31,12 +31,13 @@ export const registerUser = async(req,res) => {
 
     const user = await pool.query(insertUser, [email, hashedPassword, phoneNumber, address]);
 
+    console.log('JWT_SECRET:', process.env.JWT_SECRET);
     const token = jwt.sign({ userId: user.rows[0].userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     res.status(201).json({ token, user: user.rows[0] });
   } 
   catch(error) {
-    console.error(error.message);
+    console.error('Error:', error);
     res.status(500).json({ message: 'Internal server error' });
   }
 };
@@ -59,21 +60,20 @@ export const loginUser = async(req,res) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
-    const user = userResult.rows[0];
+    const user = userExists.rows[0];
 
     const isMatch = await bcrypt.compare(password, user.password);
     if(!isMatch) {
       return res.status(401).json({ message: "Wrong password" });
     }
 
+    console.log('JWT_SECRET:', process.env.JWT_SECRET);
     const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     res.status(200).json({ token, user });
   } 
   catch(error){
-    await createUserTable();
-    
-    console.error(error.message);
+    console.error('Error:', error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -84,7 +84,7 @@ export const logoutUser = async(req, res) => {
     res.status(200).json({ message:"Logged out successfully" });
   } 
   catch(error){
-    console.error(error.message);
+    console.error('Error:', error);
     res.status(500).json({ message:"Internal server error" });
   }
 };

@@ -10,7 +10,6 @@ import bookingRoutes from "../Backend/routes/booking.routes.js"
 import pool from './config/db.js'
 
 
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
