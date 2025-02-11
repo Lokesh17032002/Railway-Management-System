@@ -56,7 +56,7 @@ export const loginAdmin = async (req, res) => {
     const getAdmin = 'SELECT * FROM admins WHERE email = $1';
     const adminExists = await pool.query(getAdmin, [email]);
 
-    if(adminExists.rows.length === 0 || adminExists.rows[0].apiKey !== apiKey) {
+    if(adminExists.rows.length === 0 || adminExists.rows[0].apikey !== apiKey) {
       return res.status(401).json({ message: "Invalid email, password, or API key" });
     }
 
