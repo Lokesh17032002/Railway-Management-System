@@ -16,6 +16,5 @@ const createUserTable = async() => {
   await pool.query(query);
 }
 
-createUserTable()
 export default createUserTable;
 
