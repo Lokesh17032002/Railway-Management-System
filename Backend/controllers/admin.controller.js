@@ -2,6 +2,7 @@ import pool from '../config/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
+import createAdminTable from "../models/admin.model.js"
 
 export const registerAdmin = async(req,res) => {
   const errors = validationResult(req);
@@ -30,11 +31,13 @@ export const registerAdmin = async(req,res) => {
     `;
     const admin = await pool.query(insertAdmin, [email, hashedPassword, phoneNumber, address, apiKey]);
 
+    console.log('JWT_SECRET:', process.env.JWT_SECRET);
+
     const token = jwt.sign({ adminId: admin.rows[0].adminId }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.status(201).json({ token, admin: admin.rows[0] });
   } 
   catch(error){
-    console.error(error.message);
+    console.error('Error Stack:', error.stack);
     res.status(500).json({ message: "Internal server error" });
   }
 };

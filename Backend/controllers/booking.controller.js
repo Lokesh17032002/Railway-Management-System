@@ -1,5 +1,6 @@
 import pool from '../config/db.js'
 import { validationResult } from 'express-validator'
+import createBookingTable from "../models/booking.model.js"
 
 export const bookSeat = async(req,res) => {
   const errors = validationResult(req)

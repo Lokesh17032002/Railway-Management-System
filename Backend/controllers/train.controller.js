@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import { validationResult } from 'express-validator';
+import createTrainTable from "../models/train.model.js"
 
 export const addTrain = async(req,res) => {
   const errors = validationResult(req)
