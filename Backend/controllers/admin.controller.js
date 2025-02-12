@@ -31,7 +31,7 @@ export const registerAdmin = async(req,res) => {
     `;
     const admin = await pool.query(insertAdmin, [email, hashedPassword, phoneNumber, address, apiKey]);
 
-    console.log('JWT_SECRET:', process.env.JWT_SECRET);
+    //console.log('JWT_SECRET:', process.env.JWT_SECRET);
 
     const token = jwt.sign({ adminId: admin.rows[0].adminId }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.status(201).json({ token, admin: admin.rows[0] });
@@ -67,7 +67,8 @@ export const loginAdmin = async (req, res) => {
       return res.status(401).json({ message: "Wrong password" });
     }
 
-    const token = jwt.sign({ adminId: admin.adminId }, process.env.JWT_SECRET,{ expiresIn:'1d' });
+    const token = jwt.sign({ adminId: admin.adminId, isAdmin: true }, process.env.JWT_SECRET,{ expiresIn:'1d' });
+    res.cookie('token', token);
     res.status(200).json({token, admin});
   } 
   catch (error) {
@@ -77,9 +78,7 @@ export const loginAdmin = async (req, res) => {
 };
 
 export const logoutAdmin = async(req, res) => {
-  try{
-    await createAdminTable();
-      
+  try{      
     res.clearCookie('token');
     res.status(200).json({ message: "Logged out successfully" });
   } 

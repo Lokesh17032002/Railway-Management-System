@@ -10,7 +10,7 @@ const createBookingTable = async() => {
     trainId INTEGER REFERENCES trains(trainId),
     seatsBooked INTEGER NOT NULL,
     bookingDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    bookingStatus VARCHAR(50) DEFAULT 'Pending',
+    bookingStatus VARCHAR(50) DEFAULT 'Pending'
   )`
 
   await pool.query(query);

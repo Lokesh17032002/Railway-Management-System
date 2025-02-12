@@ -72,10 +72,10 @@ export const getTrainsByRoute = async(req,res) => {
   try{
     await createTrainTable()
 
-    const fetchTrainsQuery = `SELECT * FROM trains
+    const getTrain = `SELECT * FROM trains
       WHERE sourceStation = $1 AND destinationStation = $2;`;
     
-    const trains = await pool.query(fetchTrainsQuery, [sourceStation, destinationStation])
+    const trains = await pool.query(getTrain, [sourceStation, destinationStation])
 
     res.status(200).json({ trains: trains.rows })
   } 

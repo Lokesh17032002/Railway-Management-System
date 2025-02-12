@@ -67,9 +67,10 @@ export const loginUser = async(req,res) => {
       return res.status(401).json({ message: "Wrong password" });
     }
 
-    console.log('JWT_SECRET:', process.env.JWT_SECRET);
-    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    //console.log('JWT_SECRET:', process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
+    res.cookie('token', token)
     res.status(200).json({ token, user });
   } 
   catch(error){

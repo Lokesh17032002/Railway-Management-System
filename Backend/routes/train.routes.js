@@ -20,10 +20,12 @@ router.put('/update/:trainId', [
   body('availableSeats').optional().isInt({ min: 0 }).withMessage('Available seats must be at least 0'),
 ], authAdmin, updateTrain)
 
+
 router.get('/search', [
   body('sourceStation').notEmpty().withMessage('Source station is required'),
   body('destinationStation').notEmpty().withMessage('Destination station is required'),
 ], getTrainsByRoute)
+
 
 router.get('/availability/:trainId', [
   param('trainId').isInt().withMessage('Valid train ID is required'),
